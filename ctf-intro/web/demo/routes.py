@@ -33,7 +33,7 @@ def members():
     form = MemberForm()
 
     if request.method == 'POST':
-        search_user(form)
+        form.answers.data = search_user(form)[:][0][0]
 
     
     return render_template('members.html.j2', form=form)
