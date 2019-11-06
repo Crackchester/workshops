@@ -59,3 +59,16 @@ class Security(object):
 @login.user_loader
 def load_user(id):
     return User(id)
+
+def search_user(form):
+    query = ("SELECT username FROM Users WHERE username like '{name}' AND cool = '{cool}'"
+                    .format(name=form.username.data, cool=form.cool.data))
+
+    query = "SELECT * FROM Users WHERE username like 'test' AND cool= '' UNION SELECT * FROM Users;#'"
+    print(query)
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    user = cursor.fetchall()
+    print(user)
+    user = cursor.fetchall()
+    print(user)

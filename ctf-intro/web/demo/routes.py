@@ -2,7 +2,8 @@ from flask import render_template, flash, redirect, request
 from flask_login import login_required, current_user, logout_user
 from demo import app
 from demo.login_form import LoginForm
-from demo.models import login_user_with_form
+from demo.member_form import MemberForm
+from demo.models import login_user_with_form, search_user
 
 @app.route('/')
 @app.route('/index')
@@ -25,3 +26,14 @@ def login():
 def logout():
     logout_user()
     return redirect('/login')
+
+@app.route('/members', methods=['GET','POST'])
+@login_required
+def members():
+    form = MemberForm()
+
+    if request.method == 'POST':
+        search_user(form)
+
+    
+    return render_template('members.html.j2', form=form)
